@@ -25,34 +25,39 @@ fi
 
 # Customize the panel
 ## Modify the panel's position
-gsettings set org.cinnamon panels-enabled "['1:0:top']"
-gsettings set org.cinnamon panels-height "['1:30']"
+gsettings set org.cinnamon panels-enabled "['1:0:bottom']"
+gsettings set org.cinnamon panels-height "['1:40']"
 # https://forums.linuxmint.com/viewtopic.php?t=285940
 
 ## Install favorite applets ===================================================
 cd ~/.local/share/cinnamon/applets/
-wget https://cinnamon-spices.linuxmint.com/files/applets/CinnVIIStarkMenu@NikoKrause.zip && unzip CinnVIIStarkMenu@NikoKrause.zip && rm CinnVIIStarkMenu@NikoKrause.zip
+#wget https://cinnamon-spices.linuxmint.com/files/applets/CinnVIIStarkMenu@NikoKrause.zip && unzip CinnVIIStarkMenu@NikoKrause.zip && rm CinnVIIStarkMenu@NikoKrause.zip
 wget https://cinnamon-spices.linuxmint.com/files/applets/weather@mockturtl.zip && unzip weather@mockturtl.zip && rm weather@mockturtl.zip
 wget https://cinnamon-spices.linuxmint.com/files/applets/color-picker@fmete.zip && unzip color-picker@fmete.zip && rm color-picker@fmete.zip
-wget https://cinnamon-spices.linuxmint.com/files/applets/show-hide-applets@mohammad-sn.zip && unzip show-hide-applets@mohammad-sn.zip && rm show-hide-applets@mohammad-sn.zip
 cd $DIR
 
 ## Set applets layout
 APPLETS="[\
-'panel1:left:0:CinnVIIStarkMenu@NikoKrause', \
-'panel1:left:1:workspace-switcher@cinnamon.org', \
-'panel1:center:0:calendar@cinnamon.org', \
-'panel1:right:0:network@cinnamon.org', \
-'panel1:right:1:sound@cinnamon.org', \
-'panel1:right:2:color-picker@fmete', \
-'panel1:right:3:xapp-status@cinnamon.org', \
-'panel1:right:5:notifications@cinnamon.org', \
-'panel1:right:6:weather@mockturtl'\
+'panel1:left:0:menu@cinnamon.org', \
+'panel1:left:1:separator@cinnamon.org',\
+'panel1:left:2:grouped-window-list@cinnamon.org',\
+
+'panel1:right:0:workspace-switcher@cinnamon.org', \
+
+
+'panel1:right:1:network@cinnamon.org', \
+'panel1:right:2:sound@cinnamon.org', \
+'panel1:right:3:color-picker@fmete', \
+'panel1:right:4:xapp-status@cinnamon.org', \
+'panel1:right:5:sound@cinnamon.org', \
+'panel1:right:6:notifications@cinnamon.org', \
+'panel1:right:7:weather@mockturtl',\
+'panel1:right:99:calendar@cinnamon.org', \
 "
 if [ -d "/sys/class/power_supply" ]; then
     # This is a laptop. Include battery applet
     # 'panel1:right:XX:power@cinnamon.org:XX'
-    APPLETS="$APPLETS, 'panel1:right:99:power@cinnamon.org'"
+    APPLETS="$APPLETS, 'panel1:right:98:power@cinnamon.org'"
 fi
 APPLETS="$APPLETS]"
 
@@ -94,6 +99,13 @@ gsettings set org.cinnamon.desktop.background picture-uri "file:///$IMGDIR/wallp
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-left "['<Alt>1']"
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-right "['<Alt>2']"
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-up "['<Super><Tab>', '<Alt>F1']"
+gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-down "['<Super><Shift><Tab>', '<Alt>F2']"
+gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-1 "['<Super>1']"
+gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-2 "['<Super>2']"
+gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-3 "['<Super>3']"
+gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-4 "['<Super>4']"
+
+gsettings set org.cinnamon.desktop.keybindings.media-keys screensaver "'<Super>l', 'XF86ScreenSaver'"
 
 # todo Find lock screen command and set Super+L shortcut
 

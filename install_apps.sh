@@ -66,9 +66,9 @@ rm ./obsidian_${VERSION}_amd64.deb
 
 #Chrome
 # Install Google Chrome
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install -y ./google-chrome-stable_current_amd64.deb
-rm ./google-chrome-stable_current_amd64.deb
+# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+# sudo apt install -y ./google-chrome-stable_current_amd64.deb
+# rm ./google-chrome-stable_current_amd64.deb
 
 # Discord - Chat app
 # wget -O ~/discord.deb "discordapp.com"

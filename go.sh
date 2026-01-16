@@ -21,12 +21,10 @@ fi
 
 # Modify desktop appearance and panel
 #bash desktop_setup.sh $SUDO_VAR
-# Install and configure Plank dock
-#bash plank_setup.sh $SUDO_VAR
 # Install and configure Conky
-#bash conky_setup.sh $SUDO_VAR
+bash conky_setup.sh $SUDO_VAR
 # Modify general appearance
-bash theme_setup.sh $SUDO_VAR
+#bash theme_setup.sh $SUDO_VAR
 
 # Need to log-out
 display_banner() {
