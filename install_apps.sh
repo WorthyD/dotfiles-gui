@@ -77,3 +77,12 @@ rm ./obsidian_${VERSION}_amd64.deb
 
 # Steam
 sudo apt install -y steam
+
+
+#Open Razer
+# sudo gpasswd -a $USER plugdev
+# sudo add-apt-repository ppa:openrazer/stable
+# sudo add-apt-repository ppa:polychromatic/stable
+# sudo apt install openrazer-meta
+sudo apt install input-remapper
+cp -rT input-remapper-2/ ~/.config/input-remapper-2

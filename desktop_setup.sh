@@ -25,8 +25,8 @@ fi
 
 # Customize the panel
 ## Modify the panel's position
-gsettings set org.cinnamon panels-enabled "['1:0:bottom']"
-gsettings set org.cinnamon panels-height "['1:40']"
+gsettings set org.cinnamon panels-enabled "['1:0:bottom', '2:3:bottom', '3:1:bottom', '4:2:bottom']"
+gsettings set org.cinnamon panels-height "['1:40', '2:40', '3:40', '4:40']"
 # https://forums.linuxmint.com/viewtopic.php?t=285940
 
 ## Install favorite applets ===================================================
@@ -41,10 +41,7 @@ APPLETS="[\
 'panel1:left:0:menu@cinnamon.org', \
 'panel1:left:1:separator@cinnamon.org',\
 'panel1:left:2:grouped-window-list@cinnamon.org',\
-
 'panel1:right:0:workspace-switcher@cinnamon.org', \
-
-
 'panel1:right:1:network@cinnamon.org', \
 'panel1:right:2:sound@cinnamon.org', \
 'panel1:right:3:color-picker@fmete', \
@@ -53,6 +50,9 @@ APPLETS="[\
 'panel1:right:6:notifications@cinnamon.org', \
 'panel1:right:7:weather@mockturtl',\
 'panel1:right:99:calendar@cinnamon.org', \
+'panel2:left:0:grouped-window-list@cinnamon.org', \
+'panel3:left:0:grouped-window-list@cinnamon.org', \
+ 'panel4:left:0:grouped-window-list@cinnamon.org' \
 "
 if [ -d "/sys/class/power_supply" ]; then
     # This is a laptop. Include battery applet
@@ -64,18 +64,46 @@ APPLETS="$APPLETS]"
 ## Enabled applets: 'panel_name:left|center|right:position:applet_name<: optional id>'
 gsettings set org.cinnamon enabled-applets "$APPLETS"
 
+FAVORITES="[\
+ 'google-chrome.desktop', \
+ 'steam.desktop', 'discord.desktop', \
+ 'mintinstall.desktop', \
+ 'cinnamon-settings.desktop', \
+ 'org.gnome.Terminal.desktop', \
+ 'nemo.desktop']"
+
+gsettings set org.cinnamon favorite-apps "$FAVORITES"
+
 ## Change applets settings
 sleep 2
 ### calendar
 sed -i '/use-custom-format/,/custom-format/ s/value": false/value": true/' ~/.config/cinnamon/spices/calendar@cinnamon.org/*.json
+# This sed command recursively replaces the date/time format string in Cinnamon calendar 
+# widget configuration files. It changes the timestamp format from "%A, %B %e, %H:%M" 
+# (full weekday name, full month name, day, 24-hour time) to "%b %e, %I:%M %p" 
+# (abbreviated month name, day, 12-hour time with AM/PM). The -i flag performs 
+# in-place editing on all JSON configuration files in the Cinnamon calendar spice directory.
 sed -i 's/value": "%A, %B %e, %H:%M/value": "%b %e, %I:%M %p/g' ~/.config/cinnamon/spices/calendar@cinnamon.org/*.json
 gsettings set org.cinnamon.desktop.interface clock-use-24h false
+
+#PINNED= "['nemo.desktop','org.gnome.Terminal.desktop','google-chrome.desktop', 'code.desktop','discord.desktop', 'steam.desktop']"
+#sed -i "/pinned-apps/ s|value\": \"\\['nemo.desktop','org.gnome.Terminal.desktop','google-chrome.desktop', 'code.desktop','discord.desktop', 'steam.desktop'\\]\"|value\": \"['nemo.desktop','org.gnome.Terminal.desktop','google-chrome.desktop', 'code.desktop','discord.desktop', 'steam.desktop']\"|g" ~/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json
+# Updates the pinned applications in Cinnamon's grouped-window-list spice configuration.
+# Replaces the "value" array for "pinned-apps" with a predefined list of desktop applications
+# (Nemo, GNOME Terminal, Google Chrome, VS Code, Discord, and Steam).
+# Modifies all JSON configuration files in the grouped-window-list spice directory.
+#sed -i '/pinned-apps/ s/"value": \[.*\]/"value": ["nemo.desktop","org.gnome.Terminal.desktop","google-chrome.desktop", "code.desktop","discord.desktop", "steam.desktop"]/' ~/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json
+#sed -i '/pinned-apps/ s/"value": "*"/"value": "blah/' ~/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json
+sed -i '/"value": \[/,/\]/{s/"nemo\.desktop",//; s/"firefox\.desktop",//; s/"org\.gnome\.Terminal\.desktop"//; /^\s*\]/i "nemo.desktop","org.gnome.Terminal.desktop","google-chrome.desktop", "code.desktop","discord.desktop", "steam.desktop"
+}' /home/worthyd/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json
+
+#sed -i 's/"value": \[.*\]/"value": ["neo.desktop", "firefox.desktop", "org.gnome.Terminal.desktop"]/g' /home/worthyd/.config/cinnamon/spices/grouped-window-list@cinnamon.org/292.json
 
 
 ### workspace-switcher
 sed -i 's/value": "visual/value": "buttons/g' ~/.config/cinnamon/spices/workspace-switcher@cinnamon.org/*.json
 ### CinnVIIStarkMenu
-sed -i 's/value": "stark/value": "mate/g' ~/.config/cinnamon/spices/CinnVIIStarkMenu@NikoKrause/*.json
+#sed -i 's/value": "stark/value": "mate/g' ~/.config/cinnamon/spices/CinnVIIStarkMenu@NikoKrause/*.json
 
 # Install favorite extensions =================================================
 cd ~/.local/share/cinnamon/extensions/
@@ -105,7 +133,7 @@ gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-2 "['<Supe
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-3 "['<Super>3']"
 gsettings set org.cinnamon.desktop.keybindings.wm switch-to-workspace-4 "['<Super>4']"
 
-gsettings set org.cinnamon.desktop.keybindings.media-keys screensaver "'<Super>l', 'XF86ScreenSaver'"
+gsettings set org.cinnamon.desktop.keybindings.media-keys screensaver "['<Super>l', 'XF86ScreenSaver']"
 
 # todo Find lock screen command and set Super+L shortcut
 

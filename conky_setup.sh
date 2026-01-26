@@ -18,6 +18,7 @@ if [ "$SUDO_VAR" = "yes" ]; then
     sudo add-apt-repository -y ppa:teejee2008/foss
     sudo apt update
     sudo apt install -y conky-all conky-manager2
+    sudo apt install hwinfo
 fi
 
 # Config Conky - a light-weight system monitor software for Linux
